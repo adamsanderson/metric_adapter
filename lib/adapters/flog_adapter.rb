@@ -1,5 +1,3 @@
-require 'flog'
-
 module MetricAdapter
   class FlogAdapter
     attr_reader :flog
