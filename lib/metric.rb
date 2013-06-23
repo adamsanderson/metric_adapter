@@ -5,7 +5,6 @@ module MetricAdapter
     attr_accessor :message
     
     attr_accessor :score
-    attr_reader   :details
 
     def initialize(location, signature,  message)
       @location  = location
