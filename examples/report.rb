@@ -12,7 +12,7 @@ require 'reek'
 # interface for Flay, Flog, and Reek's metrics.
 #
 
-files = Dir[DIR_NAME + '/../lib/**/*.rb']
+files = ARGV.empty? ? Dir[DIR_NAME + '/../lib/**/*.rb'] : ARGV
 
 # Generate metrics for Flay.
 # 
@@ -55,6 +55,7 @@ metrics_by_path.each do |path, metrics|
   puts divider
   puts path
   puts divider
+  
   puts "  line: message"
   metrics.sort_by{|m| m.location }.each do |m|
     puts "%6d: %s" % [m.location.line, m.message]

@@ -31,11 +31,39 @@ class FlogAdapterTest < MiniTest::Unit::TestCase
     assert message =~ /\d+/,  "Should reference the score: #{message.inspect}"
   end
   
+  def test_ignoring_unlocatable_metrics
+    flog  = Flog.new
+    flog.flog_ruby top_level_sample, "sample.rb"
+    flog.calculate_total_scores 
+    
+    adapter = FlogAdapter.new(flog)
+    metrics = adapter.metrics
+    
+    assert metrics.empty?, "Flog should not attach location information to top level source"
+  end
+  
   private
   def flog_self
     flog = Flog.new
     flog.flog(__FILE__)
     
     FlogAdapter.new(flog)
+  end
+  
+  def top_level_sample
+    <<-RUBY
+      # Some good meaningless floggable source outside the scope of a method
+      if xs.any?{|x| x ? true : false} && x.length > 3 && x.length < 9
+        xs.each do |x|
+          (x+1).times{|xp| report(xp / 2)}
+          yield x-1
+        end
+        if xs.length % 2 == 0 
+          puts xs.length % 4 == 0 ? 1 : 0
+        end
+      end
+      
+      puts xs.join(", ")
+    RUBY
   end
 end
