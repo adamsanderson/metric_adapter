@@ -11,6 +11,10 @@ module MetricAdapter
       "#{path}:#{line}"
     end
     
+    def <=>(other)
+      [path,line] <=> [other.path, other.line]
+    end
+    
     private
     
     def parse_path(path)
