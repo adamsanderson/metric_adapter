@@ -20,7 +20,7 @@ module MetricAdapter
   
     def create_metric(smell, line)
       location  = Location.new(smell.source, line)
-      message   = "#{smell.message} (#{s.subclass})".capitalize
+      message   = "#{smell.message.capitalize} (#{smell.subclass})"
       signature = smell.context
 
       Metric.new(location, signature, message)
