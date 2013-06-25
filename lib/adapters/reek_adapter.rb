@@ -8,7 +8,8 @@ module MetricAdapter
   
     def metrics
       metrics = examiner.smells.map do |smell|
-        smell.lines.map do |line|
+        line_numbers = Array(smell.lines).uniq
+        line_numbers.map do |line|
           create_metric(smell, line)
         end
       end
