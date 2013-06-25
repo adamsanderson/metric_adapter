@@ -13,7 +13,7 @@ include AnalyzerMixin
 
 COLORS = {
   :normal    => "\033[39m",
-  :alternate => "\033[38;5;109m",
+  :alternate => "\033[38;5;99m",
   :faded     => "\033[90m"
 }
 
@@ -21,7 +21,7 @@ files = ARGV.empty? ? [__FILE__] : ARGV
 
 def report_on_file(path, metrics)
   puts "\n#{path}"
-  return if metrics.empty?
+  return if !metrics || metrics.empty?
   
   metrics_by_line = metrics.group_by{|m| m.location.line }
   
