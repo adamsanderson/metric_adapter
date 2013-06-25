@@ -1,7 +1,9 @@
 MetricAdapter
 ==============
 
-There are a [ton of static analyzers for ruby](http://xkcd.com/927/), each providing different insightful metrics.  What do you do when you want to use more than one of them? Each analyzer takes a different configuration, and provides results in different formats.  MetricAdapter solves the latter problem by converting the results of each analyzer into a common format.
+At [LiquidPlanner](http://liquidplanner.com), we wanted to build some tools to help us analyze our code.  There are a [ton of static analyzers for ruby](http://xkcd.com/927/), each providing different insightful metrics, so there's no need to write a new analyzer.  But what do you do when you want to use more than one of them? 
+
+Each analyzer takes a different configuration, and provides results in different formats.  MetricAdapter solves the latter problem by converting the results of each analyzer into a common format.
 
 Now you can take all of these wonderful libraries and combine their results without worrying about how they internally represent their metrics.
 
@@ -37,7 +39,7 @@ To get normalized metrics, instantiate the static analysis library of your choic
       puts "#{m.location} - #{m.message}"
     end
 
-For a full example, see `examples/report.rb`.
+For a full example, see `examples/report.rb` and `examples/annotate.rb`.  You can use these examples to build tools that are appropriate for your team.
 
 Supported Libraries 
 -------------------
@@ -53,4 +55,4 @@ Please do!  Take a look at the existing adapters and tests (`lib/adapters` and `
 
 ---
 
-[Adam Sanderson](http://monkeyandcrow.com)
+[Adam Sanderson](http://monkeyandcrow.com) for [LiquidPlanner](http://liquidplanner.com)
