@@ -16,10 +16,9 @@ class FlogAdapterTest < MiniTest::Unit::TestCase
   def test_flogging_adapts_locations
     adapter  = flog_self
     metric   = adapter.metrics.first
-    location = metric.location
     
-    assert_equal __FILE__, location.path, "Should reference this file"
-    assert location.line != 0, "Line numbers should be captured (line:0 should not show up in flog)"
+    assert_equal __FILE__, metric.path, "Should reference this file"
+    assert metric.line != 0, "Line numbers should be captured (line:0 should not show up in flog)"
   end
   
   def test_flogging_messages

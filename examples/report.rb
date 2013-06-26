@@ -22,7 +22,7 @@ end
 metrics = flay(files) + flog(files) + reek(files)
 
 # Group those metrics by path
-metrics_by_path = metrics.group_by{|m| m.location.path }
+metrics_by_path = metrics.group_by{|m| m.path }
 
 # For each path, print out a little report.
 metrics_by_path.each do |path, metrics|
@@ -31,7 +31,7 @@ metrics_by_path.each do |path, metrics|
   puts divider
   
   puts "  line: message"
-  metrics.sort_by{|m| m.location }.each do |m|
-    puts "%6d: %s" % [m.location.line, m.message]
+  metrics.sort_by{|m| m.line }.each do |m|
+    puts "%6d: %s" % [m.line, m.message]
   end
 end

@@ -18,10 +18,9 @@ class ReekAdapterTest < MiniTest::Unit::TestCase
   def test_examiner_adapts_locations
     adapter  = examine_sample
     metric   = adapter.metrics.first
-    location = metric.location
     
-    assert_equal SAMPLE_PATH, location.path, "Should have included the path"
-    assert location.line > 0, "Should have a non zero line number"
+    assert_equal SAMPLE_PATH, metric.path, "Should have included the path"
+    assert metric.line > 0, "Should have a non zero line number"
   end
   
   def test_examiner_returns_metrics_for_each_line_of_each_smell

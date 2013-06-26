@@ -67,7 +67,7 @@ end
 # Combine metrics from all our sources (See AnalyzerMixin):
 metrics = flay(files, 16) + flog(files) + reek(files)
 
-metrics_by_path = metrics.group_by{|m| m.location.path }
+metrics_by_path = metrics.group_by{|m| m.path }
 
 files.each do |path|
   metrics = metrics_by_path[path]

@@ -3,7 +3,7 @@ module MetricAdapter
   # A normalized representation of a code metric.
   class Metric
     
-    # Location where this metric applies
+    # Location where this metric applies (see the Location class)
     attr_accessor :location
     
     # Associated class and method signature
@@ -24,6 +24,17 @@ module MetricAdapter
       @message   = message
       @score     = 0
     end
-  
+    
+    # Returns the path that this metric applies to, for example:
+    #   ./lib/metric.rb
+    def path
+      location.path
+    end
+    
+    # Returns the line number this metric applies to.
+    def line
+      location.line
+    end
+    
   end
 end

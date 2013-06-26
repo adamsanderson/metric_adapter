@@ -25,10 +25,9 @@ class FlayAdapterTest < MiniTest::Unit::TestCase
   def test_flay_adapts_locations
     adapter  = flay_self
     metric   = adapter.metrics.first
-    location = metric.location
     
-    assert_equal __FILE__, location.path, "Should reference this file"
-    assert location.line != 0, "Line numbers should be captured (line:0 should not show up in flog)"
+    assert_equal __FILE__, metric.path, "Should reference this file"
+    assert metric.line != 0, "Line numbers should be captured (line:0 should not show up in flog)"
   end
   
   def test_flay_messages
