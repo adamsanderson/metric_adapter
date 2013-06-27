@@ -13,11 +13,12 @@ class FlayAdapterTest < MiniTest::Unit::TestCase
     assert_equal [], adapter.metrics
   end
   
-  def test_flay_adapts_locations
+  def test_flay_generates_metrics_per_line
     adapter  = flay_self
     flay = adapter.flay
+    
     # For each set of similar nodes, it should generate all the permutations (nodes choose 2)
-    expected_count = flay.hashes.map{|h, nodes| nodes ** 2}.inject{|n,m| n+m }
+    expected_count = flay.hashes.map{|h, nodes| factorial(nodes.length) }.inject{|n,m| n+m }
     
     assert_equal expected_count, adapter.metrics.length, "Each set of similar nodes should generate n^2 metrics"
   end
@@ -29,7 +30,7 @@ class FlayAdapterTest < MiniTest::Unit::TestCase
     assert_equal __FILE__, metric.path, "Should reference this file"
     assert metric.line != 0, "Line numbers should be captured (line:0 should not show up in flog)"
   end
-  
+    
   def test_flay_messages
     adapter  = flay_self
     metric   = adapter.metrics.first
@@ -47,6 +48,10 @@ class FlayAdapterTest < MiniTest::Unit::TestCase
     flay.analyze
     
     FlayAdapter.new(flay)
+  end
+  
+  def factorial(n)
+    (1..n).inject(&:*)
   end
   
 end
