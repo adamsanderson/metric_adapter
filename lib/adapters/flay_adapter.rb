@@ -12,25 +12,12 @@ module MetricAdapter
           create_metric(hash_key, node_a, node_b)
         end
       end
-      
+
       metrics.flatten
     end
   
     private
-  
-    def metrics_for_hash(hash_key, score)
-      nodes = flay.hashes[hash_key]
-      is_identical = 
       
-      location = method_location(signature)
-      message  = "Flog: #{score.round(2)}"
-    
-      metric = Metric.new(location, signature, message)
-      metric.score = score
-    
-      metric
-    end
-    
     def create_metric(hash_key, node_a, node_b)
       is_identical = flay.identical[hash_key]
       similarity   = is_identical ? "identical" : "similar"
@@ -41,6 +28,8 @@ module MetricAdapter
       signature = ""
       
       metric = Metric.new(node_location(node_a), signature, message)
+      metric.score = score
+      metric
     end
     
     def node_location(node)

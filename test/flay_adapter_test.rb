@@ -17,10 +17,10 @@ class FlayAdapterTest < MiniTest::Unit::TestCase
     adapter  = flay_self
     flay = adapter.flay
     
-    # For each set of similar nodes, it should generate all the permutations (nodes choose 2)
-    expected_count = flay.hashes.map{|h, nodes| factorial(nodes.length) }.inject{|n,m| n+m }
-    
-    assert_equal expected_count, adapter.metrics.length, "Each set of similar nodes should generate n^2 metrics"
+    # For each set of similar nodes, it should generate all the permutations
+    expected_count = flay.hashes.map{|h, nodes| nodes.permutation(2).count }.inject{|n,m| n+m }
+    count          = adapter.metrics.length
+    assert_equal expected_count, count, "Each set of similar nodes should generate n! metrics"
   end
   
   def test_flay_adapts_locations
@@ -30,13 +30,20 @@ class FlayAdapterTest < MiniTest::Unit::TestCase
     assert_equal __FILE__, metric.path, "Should reference this file"
     assert metric.line != 0, "Line numbers should be captured (line:0 should not show up in flog)"
   end
+  
+  def test_flay_adapts_scores
+    adapter = flay_self
+    scores  = adapter.metrics.map(&:score)
     
+    assert scores.all?{|s| s > 0 }, "Expected all the scores to be populated. #{scores.inspect}"
+  end
+  
   def test_flay_messages
     adapter  = flay_self
     metric   = adapter.metrics.first
     message  = metric.message
     
-    assert message =~ /flay/i,   "Should reference flay: #{message.inspect}"
+    assert message =~ /flay/i, "Should reference flay: #{message.inspect}"
     assert message =~ /#{Regexp.escape __FILE__}:\d+/, "Should reference the a path: #{message.inspect}"
   end
   
@@ -48,10 +55,5 @@ class FlayAdapterTest < MiniTest::Unit::TestCase
     flay.analyze
     
     FlayAdapter.new(flay)
-  end
-  
-  def factorial(n)
-    (1..n).inject(&:*)
-  end
-  
+  end  
 end
